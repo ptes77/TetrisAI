@@ -33,8 +33,3 @@ Keybinds:
 * s/S: save current state of the game (for debugging purposes)
 * l/L: load saved state of the game (for debugging purposes)
 * q/Q: quit game
-
-
-```python
-
-```
