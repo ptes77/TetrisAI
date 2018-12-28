@@ -18,7 +18,7 @@ Then run the TetrisAI.py file from terminal or an IDE and enjoy!
 
 What will be added in the future:
 * Implementing parallelization by splitting the breadth-first search to different CUDA cores in a GPU. Will decrease computation time by 20x (estimated)
-* ~Adding a normalization factor to the weights in the algorithm/genome (currently, they tend to favor values in the range of 1e-9 and 1e-12)~ There was an original problem with how evolution was carried out in the code.
+* ✓ ~Adding a normalization factor to the weights in the algorithm/genome (currently, they tend to favor values in the range of 1e-9 and 1e-12)~ There was an original problem with how evolution was carried out in the code.
 * Separating the TetrisAI.py file into smaller, more manageable files
 * Fixing the significant speed drop due to using too many tkinter.Canvas item handles
 * More data visualization during training (e.g. create a plot of the average fitness of each generation, correlation between specific paramters and fitness)
