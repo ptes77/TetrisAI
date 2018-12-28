@@ -1,6 +1,5 @@
 # Tetris AI v0
 
-import time
 import random
 from math import floor, ceil
 from constants import *
@@ -24,10 +23,10 @@ def _make_child(parent1, parent2, factor):
     Return Value:
         An integer value representing the numeric value of the genome
     '''
-    fitness1 = int(parent1['fitness'])
-    fitness2 = int(parent2['fitness'])
-    factor1 = int(parent1[factor])
-    factor2 = int(parent2[factor])
+    fitness1 = parent1['fitness']
+    fitness2 = parent2['fitness']
+    factor1 = parent1[factor]
+    factor2 = parent2[factor]
     
     normalizingFitness = fitness1 + fitness2
     newFitness = (fitness1 * factor1 + fitness2 * factor2) / normalizingFitness
@@ -823,14 +822,14 @@ class Tetris:
         '''Creates the initial population and genomes for evolutionary
         genomics. Contains the following information:
             id: id tag [0, 1)
-            weightedHeight: height of highest column ** 1.5 [-0.5, 0.5)
-            rowsCleared: number of rows cleared [-0.5, 0.5)
-            cumulativeHeight: sum of all heights [-0.5, 0.5)
+            weightedHeight: height of highest column ** 1.5 [-1, 1)
+            rowsCleared: number of rows cleared [-1, 1)
+            cumulativeHeight: sum of all heights [-1, 1)
             relativeHeight: range/difference between highest and lowest
-                            columns [-0.5, 0.5)
-            holes: number of holes [-0.5, 0.5)
+                            columns [-1, 1)
+            holes: number of holes [-1, 1)
             roughness: sum of absolute differences between adjacent columns
-                       [-0.5, 0.5)
+                       [-1, 1)
         
         Arguments:
             none
@@ -843,12 +842,12 @@ class Tetris:
         # genome will get the fitness characteristic later on
         for i in range(self.populationSize):
             genome = {'id': random.random(),
-                      'rowsCleared': random.random() - 0.5,
-                      'weightedHeight': random.random() - 0.5,
-                      'cumulativeHeight': random.random() - 0.5,
-                      'relativeHeight': random.random() - 0.5,
-                      'holes': random.random() - 0.5,
-                      'roughness': random.random() - 0.5}
+                      'rowsCleared': 2 * random.random() - 1,
+                      'weightedHeight': 2 * random.random() - 1,
+                      'cumulativeHeight': 2 * random.random() - 1,
+                      'relativeHeight': 2 * random.random() - 1,
+                      'holes': 2 * random.random() - 1,
+                      'roughness': 2 * random.random() - 1}
             self.genomes.append(genome)
         self.evaluate_next_genome()
     
@@ -891,7 +890,7 @@ class Tetris:
         totalFitness = 0
         for i in range(len(self.genomes)):
             totalFitness += self.genomes[i]['fitness']
-        averageFitness = totalFitness / POPULATION_SIZE
+        averageFitness = round(totalFitness / POPULATION_SIZE)
         self.averageFitness.append(averageFitness)
         print(f'Average fitness: {self.averageFitness}')
         
@@ -901,6 +900,10 @@ class Tetris:
         for elite in range(iterations):
             children.append(self.genomes[elite])
         
+        while len(children) < POPULATION_SIZE:
+            children.append(self.make_child(self.genomes[0], self.genomes[0]))
+        
+        # The bottom two don't do anything
         while len(children) < POPULATION_SIZE / 2:
             children.append(self.make_child(self._random_genome(), \
                             self.genomes[random.randint(0, iterations - 1)]))
@@ -940,8 +943,7 @@ class Tetris:
         
         for i in range(1, 7):
             if random.random() < MUTATION_RATE:
-                child[childKeys[i]] += (2 * random.random() - 1) * \
-                                        MUTATION_STEP
+                child[childKeys[i]] += (2 * random.random() - 1) * MUTATION_STEP
         
         return child
     
