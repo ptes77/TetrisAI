@@ -3,6 +3,8 @@
 
 Version 1 of a Tetris AI written in Python
 
+The AI utilizes an evolutionary algorithm that selects well-performing rulesets within each generation to be a model/reference point in the creation of rulesets in the subsequent generation. Eventually, the AI will reach a local minimum ruleset that will allow it to autonomously play the game.
+
 How to use:
 
 In the __init__ constructor of the Tetris class, change the following values to preference:
