@@ -30,9 +30,7 @@ def _make_child(parent1, parent2, factor):
     factor2 = int(parent2[factor])
     
     normalizingFitness = fitness1 + fitness2
-    newFitness = (fitness1 * factor1 + fitness2 * factor2 + \
-                  RANDOM_MUTATION * (random.random() - 0.5)) / \
-                  normalizingFitness
+    newFitness = (fitness1 * factor1 + fitness2 * factor2) / normalizingFitness
     
     return newFitness
 
@@ -995,6 +993,10 @@ class Tetris:
                                'relativeHeight': self.get_relative_height(),
                                'holes': self.get_holes(),
                                'roughness': self.get_roughness()}
+                    
+                    for key in list(algorithm.keys()):
+                        algorithm[key] *= (1 + random.choice([RANDOM_MUTATION, \
+                                                             -RANDOM_MUTATION]))
                     
                     rating = 0
                     
