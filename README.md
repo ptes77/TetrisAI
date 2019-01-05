@@ -3,7 +3,7 @@
 
 Version 1.1 of a Tetris AI written in Python
 
-The AI utilizes an evolutionary algorithm that uses reinforcement learning to select well-performing rulesets within each generation to be models/reference points in the creation of rulesets in the subsequent generation. Eventually, the AI will reach a local minimum ruleset that will allow it to autonomously play the game while scoring efficiently.
+The AI utilizes a genetic algorithm that uses reinforcement learning to select well-performing rulesets within each generation to be models/reference points in the creation of rulesets in the subsequent generation. Eventually, the AI will reach a local minimum ruleset that will allow it to autonomously play the game while scoring efficiently.
 
 How to use:
 
